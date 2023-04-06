@@ -28,19 +28,6 @@ namespace organizador_tareas
             nodoPadre.subTareas.Add(nuevaTarea);
         }
 
-        public void MostrarTareas(NodoTarea nodoActual, int nivel = 0)
-        {
-            if (nodoActual != null)
-            {
-                Console.WriteLine(new string(' ', nivel * 4) + "- " + nodoActual.nombre + " (" + nodoActual.fechaVencimiento.ToString("dd/MM/yyyy") + ")");
-
-                foreach (NodoTarea subTarea in nodoActual.subTareas)
-                {
-                    MostrarTareas(subTarea, nivel + 1);
-                }
-            }
-        }
-
         public bool EliminarTarea(NodoTarea nodoActual, string nombre)
         {
             if (nodoActual == null) return false;
