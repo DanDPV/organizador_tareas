@@ -17,7 +17,7 @@ namespace organizador_tareas
 
         public void AgregarTarea(string nombre, DateTime fechaVencimiento, NodoTarea nodoPadre)
         {
-            NodoTarea nuevaTarea = new NodoTarea(nombre, fechaVencimiento);
+            NodoTarea nuevaTarea = new NodoTarea(1, nombre, fechaVencimiento);
 
             if (nodoPadre == null)
             {
@@ -25,22 +25,24 @@ namespace organizador_tareas
                 return;
             }
 
+            nuevaTarea.id = nodoPadre.subTareas.Count + 1;
+
             nodoPadre.subTareas.Add(nuevaTarea);
         }
 
-        public bool EliminarTarea(NodoTarea nodoActual, string nombre)
+        public bool EliminarTarea(NodoTarea nodoActual, int id)
         {
             if (nodoActual == null) return false;
             foreach (NodoTarea subTarea in nodoActual.subTareas)
             {
-                if (subTarea.nombre == nombre)
+                if (subTarea.id == id)
                 {
                     nodoActual.subTareas.Remove(subTarea);
                     return true;
                 }
                 else
                 {
-                    bool eliminado = EliminarTarea(subTarea, nombre);
+                    bool eliminado = EliminarTarea(subTarea, id);
                     if (eliminado) return true;
                 }
             }
