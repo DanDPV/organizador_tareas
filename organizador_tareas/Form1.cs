@@ -58,6 +58,16 @@ namespace organizador_tareas
             colFecha.DataPropertyName = "fechaVencimiento";
             colFecha.HeaderText = "Fecha de Vencimiento";
             dgvTareas.Columns.Add(colFecha);
+
+            tareasRaiz = ArbolTareasRepository.ObtenerTareasPrincipales();
+            foreach (NodoTarea tarea in tareasRaiz)
+            {
+                ArbolTareas arbol = new ArbolTareas();
+                arbol.raiz = tarea;
+
+                arboles.Add(arbol);
+            }
+            actualizarGridView();
         }
     }
 }
