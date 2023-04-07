@@ -16,5 +16,48 @@ namespace organizador_tareas
         {
             InitializeComponent();
         }
+
+        List<NodoTarea> tareasRaiz;
+        List<ArbolTareas> arboles;
+
+        private void btnAddTarea_Click(object sender, EventArgs e)
+        {
+            ArbolTareas arbol = new ArbolTareas();
+            arbol.AgregarTarea(txtNombre.Text, dtpFechaVencimiento.Value, null);
+
+            arboles.Add(arbol);
+            tareasRaiz.Add(arbol.raiz);
+
+            actualizarGridView();
+        }
+
+        private void actualizarGridView()
+        {
+            dgvTareas.DataSource = null;
+            dgvTareas.DataSource = tareasRaiz;
+
+            foreach (DataGridViewRow row in dgvTareas.Rows)
+            {
+                NodoTarea tarea = (NodoTarea)row.DataBoundItem;
+                row.Cells[0].Value = tarea.nombre;
+                row.Cells[1].Value = tarea.fechaVencimiento.ToShortDateString();
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            tareasRaiz = new List<NodoTarea>();
+            arboles = new List<ArbolTareas>();
+            dgvTareas.AutoGenerateColumns = false;
+            DataGridViewColumn colNombre = new DataGridViewTextBoxColumn();
+            colNombre.DataPropertyName = "nombre";
+            colNombre.HeaderText = "Nombre";
+            dgvTareas.Columns.Add(colNombre);
+
+            DataGridViewColumn colFecha = new DataGridViewTextBoxColumn();
+            colFecha.DataPropertyName = "fechaVencimiento";
+            colFecha.HeaderText = "Fecha de Vencimiento";
+            dgvTareas.Columns.Add(colFecha);
+        }
     }
 }
