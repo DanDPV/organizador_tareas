@@ -39,5 +39,58 @@ namespace organizador_tareas
 
             return idTarea;
         }
+
+        public static List<NodoTarea> ObtenerSubtareas(int idTareaActual)
+        {
+            // Obtener los registros de la tabla "Tarea" que corresponden a las sub-tareas de la tarea actual
+            List<NodoTarea> subTareas = new List<NodoTarea>();
+            using (SqlConnection conexion = new SqlConnection(cadenaConexion))
+            {
+                conexion.Open();
+                SqlCommand comando = new SqlCommand("SELECT id, nombre, fecha_vencimiento, completado FROM Tarea WHERE id IN (SELECT id_tarea_hija FROM Relacion_Tareas WHERE id_tarea_padre = @idTareaActual);", conexion);
+                comando.Parameters.AddWithValue("@idTareaActual", idTareaActual);
+                SqlDataReader lector = comando.ExecuteReader();
+                while (lector.Read())
+                {
+                    NodoTarea subTarea = new NodoTarea(Convert.ToInt32(lector["id"]), Convert.ToString(lector["nombre"]), Convert.ToDateTime(lector["fecha_vencimiento"]));
+                    subTareas.Add(subTarea);
+                }
+                lector.Close();
+            }
+
+            // Obtener las sub-tareas recursivamente
+            foreach (NodoTarea subTarea in subTareas)
+            {
+                subTarea.subTareas = ObtenerSubtareas(subTarea.id);
+            }
+
+            return subTareas;
+        }
+
+        public static List<NodoTarea> ObtenerTareasPrincipales()
+        {
+            // Obtener los registros de la tabla "Tarea" que corresponden a las tareas principales
+            List<NodoTarea> tareas = new List<NodoTarea>();
+            using (SqlConnection conexion = new SqlConnection(cadenaConexion))
+            {
+                conexion.Open();
+                SqlCommand comando = new SqlCommand("SELECT id, nombre, fecha_vencimiento, completado FROM Tarea A LEFT JOIN Relacion_Tareas B ON B.id_tarea_hija = A.id WHERE B.id_tarea_padre is null;", conexion);
+                SqlDataReader lector = comando.ExecuteReader();
+                while (lector.Read())
+                {
+                    NodoTarea subTarea = new NodoTarea(Convert.ToInt32(lector["id"]), Convert.ToString(lector["nombre"]), Convert.ToDateTime(lector["fecha_vencimiento"]));
+                    tareas.Add(subTarea);
+                }
+                lector.Close();
+            }
+
+            // Obtener las sub-tareas recursivamente
+            foreach (NodoTarea tarea in tareas)
+            {
+                tarea.subTareas = ObtenerSubtareas(tarea.id);
+            }
+
+            return tareas;
+        }
     }
 }
