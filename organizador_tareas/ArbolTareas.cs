@@ -21,11 +21,20 @@ namespace organizador_tareas
 
             if (nodoPadre == null)
             {
+                if (ArbolTareasRepository.AgregarTarea(nuevaTarea) == -1)
+                {
+                    throw new Exception("No se pudo agregar la tarea");
+                }
                 raiz = nuevaTarea;
                 return;
             }
 
             nuevaTarea.id = nodoPadre.subTareas.Count + 1;
+
+            if (ArbolTareasRepository.AgregarTarea(nuevaTarea, nodoPadre.id) == -1)
+            {
+                throw new Exception("No se pudo agregar la tarea");
+            }
 
             nodoPadre.subTareas.Add(nuevaTarea);
         }
