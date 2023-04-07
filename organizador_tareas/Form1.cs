@@ -18,14 +18,13 @@ namespace organizador_tareas
         }
 
         List<NodoTarea> tareasRaiz;
-        List<ArbolTareas> arboles;
 
         private void btnAddTarea_Click(object sender, EventArgs e)
         {
             ArbolTareas arbol = new ArbolTareas();
             arbol.AgregarTarea(txtNombre.Text, dtpFechaVencimiento.Value, null);
 
-            arboles.Add(arbol);
+            EstadoGlobal.arboles.Add(arbol);
             tareasRaiz.Add(arbol.raiz);
 
             actualizarGridView();
@@ -47,7 +46,7 @@ namespace organizador_tareas
         private void Form1_Load(object sender, EventArgs e)
         {
             tareasRaiz = new List<NodoTarea>();
-            arboles = new List<ArbolTareas>();
+            EstadoGlobal.arboles = new List<ArbolTareas>();
             dgvTareas.AutoGenerateColumns = false;
             DataGridViewColumn colNombre = new DataGridViewTextBoxColumn();
             colNombre.DataPropertyName = "nombre";
@@ -58,6 +57,16 @@ namespace organizador_tareas
             colFecha.DataPropertyName = "fechaVencimiento";
             colFecha.HeaderText = "Fecha de Vencimiento";
             dgvTareas.Columns.Add(colFecha);
+
+            tareasRaiz = ArbolTareasRepository.ObtenerTareasPrincipales();
+            foreach (NodoTarea tarea in tareasRaiz)
+            {
+                ArbolTareas arbol = new ArbolTareas();
+                arbol.raiz = tarea;
+
+                EstadoGlobal.arboles.Add(arbol);
+            }
+            actualizarGridView();
         }
     }
 }
