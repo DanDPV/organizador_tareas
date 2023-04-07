@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="ArbolTareas.cs" />
     <Compile Include="ArbolTareasRepository.cs" />
+    <Compile Include="EstadoGlobal.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
