@@ -9,7 +9,7 @@ namespace organizador_tareas
     class EstadoGlobal
     {
         public static List<ArbolTareas> arboles;
-        public static NodoTarea tareaActual;
         public static ArbolTareas arbolActual;
+        public static Stack<NodoTarea> tareas;
     }
 }
