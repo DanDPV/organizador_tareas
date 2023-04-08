@@ -26,20 +26,41 @@ namespace organizador_tareas
 
             EstadoGlobal.arboles.Add(arbol);
             tareasRaiz.Add(arbol.raiz);
-
             actualizarGridView();
         }
 
         private void actualizarGridView()
         {
-            dgvTareas.DataSource = null;
-            dgvTareas.DataSource = tareasRaiz;
-
-            foreach (DataGridViewRow row in dgvTareas.Rows)
+            if (dgvTareas.Columns.Count == 0)
             {
-                NodoTarea tarea = (NodoTarea)row.DataBoundItem;
-                row.Cells[0].Value = tarea.nombre;
-                row.Cells[1].Value = tarea.fechaVencimiento.ToShortDateString();
+                if (tareasRaiz.Count > 0)
+                {
+                    DataGridViewColumn colNombre = new DataGridViewTextBoxColumn();
+                    colNombre.DataPropertyName = "nombre";
+                    colNombre.HeaderText = "Nombre";
+                    dgvTareas.Columns.Add(colNombre);
+
+                    DataGridViewColumn colFecha = new DataGridViewTextBoxColumn();
+                    colFecha.DataPropertyName = "fechaVencimiento";
+                    colFecha.HeaderText = "Fecha de Vencimiento";
+                    dgvTareas.Columns.Add(colFecha);
+                }
+            }
+            if (tareasRaiz.Count > 0)
+            {
+                dgvTareas.DataSource = null;
+                dgvTareas.DataSource = tareasRaiz;
+
+                foreach (DataGridViewRow row in dgvTareas.Rows)
+                {
+                    NodoTarea tarea = (NodoTarea)row.DataBoundItem;
+                    row.Cells[0].Value = tarea.nombre;
+                    row.Cells[1].Value = tarea.fechaVencimiento.ToShortDateString();
+                }
+            }
+            else
+            {
+                dgvTareas.DataSource = null;
             }
         }
 
@@ -48,15 +69,6 @@ namespace organizador_tareas
             tareasRaiz = new List<NodoTarea>();
             EstadoGlobal.arboles = new List<ArbolTareas>();
             dgvTareas.AutoGenerateColumns = false;
-            DataGridViewColumn colNombre = new DataGridViewTextBoxColumn();
-            colNombre.DataPropertyName = "nombre";
-            colNombre.HeaderText = "Nombre";
-            dgvTareas.Columns.Add(colNombre);
-
-            DataGridViewColumn colFecha = new DataGridViewTextBoxColumn();
-            colFecha.DataPropertyName = "fechaVencimiento";
-            colFecha.HeaderText = "Fecha de Vencimiento";
-            dgvTareas.Columns.Add(colFecha);
 
             tareasRaiz = ArbolTareasRepository.ObtenerTareasPrincipales();
             foreach (NodoTarea tarea in tareasRaiz)
@@ -82,6 +94,34 @@ namespace organizador_tareas
 
             VerSubtarea verSubtarea = new VerSubtarea();
             verSubtarea.Show();
+        }
+
+        private void btnEliminarTarea_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow selected = dgvTareas.SelectedRows[0];
+            int posicion = dgvTareas.Rows.IndexOf(selected);
+
+            NodoTarea tarea = tareasRaiz[posicion];
+            DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar la tarea " + tarea.nombre + " y todas sus subtareas?", "Confirmación", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+
+            if (result == DialogResult.OK)
+            {
+                ArbolTareas arbol = new ArbolTareas();
+                arbol.EliminarTarea(tarea, null);
+                int posicionNodo = 0;
+
+                foreach (NodoTarea nodo in tareasRaiz)
+                {
+                    if (tarea.id == nodo.id)
+                    {
+                        break;
+                    }
+                    posicionNodo++;
+                }
+
+                tareasRaiz.RemoveAt(posicionNodo);
+                actualizarGridView();
+            }
         }
     }
 }

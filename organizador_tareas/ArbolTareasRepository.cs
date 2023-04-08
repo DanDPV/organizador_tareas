@@ -92,5 +92,26 @@ namespace organizador_tareas
 
             return tareas;
         }
+
+        public static void EliminarTarea(int idTarea)
+        {
+            // Eliminar los registros de la tabla "Relacion_Tareas" que corresponden a la tarea actual y a sus sub-tareas
+            using (SqlConnection conexion = new SqlConnection(cadenaConexion))
+            {
+                conexion.Open();
+                SqlCommand comando = new SqlCommand("DELETE FROM Relacion_Tareas WHERE id_tarea_padre = @idTarea OR id_tarea_hija = @idTarea;", conexion);
+                comando.Parameters.AddWithValue("@idTarea", idTarea);
+                comando.ExecuteNonQuery();
+            }
+
+            // Eliminar los registros de la tabla "Tarea" que corresponden a la tarea actual y a sus sub-tareas
+            using (SqlConnection conexion = new SqlConnection(cadenaConexion))
+            {
+                conexion.Open();
+                SqlCommand comando = new SqlCommand("DELETE FROM Tarea WHERE id = @idTarea;", conexion);
+                comando.Parameters.AddWithValue("@idTarea", idTarea);
+                comando.ExecuteNonQuery();
+            }
+        }
     }
 }
