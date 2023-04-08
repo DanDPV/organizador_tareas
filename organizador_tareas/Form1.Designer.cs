@@ -37,12 +37,14 @@ namespace organizador_tareas
             this.label1 = new System.Windows.Forms.Label();
             this.dgvTareas = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
+            this.btnEliminarTarea = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTareas)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnEliminarTarea);
             this.groupBox1.Controls.Add(this.btnAddTarea);
             this.groupBox1.Controls.Add(this.dtpFechaVencimiento);
             this.groupBox1.Controls.Add(this.label2);
@@ -123,6 +125,16 @@ namespace organizador_tareas
             this.label3.TabIndex = 2;
             this.label3.Text = "Lista de tareas";
             // 
+            // btnEliminarTarea
+            // 
+            this.btnEliminarTarea.Location = new System.Drawing.Point(10, 246);
+            this.btnEliminarTarea.Name = "btnEliminarTarea";
+            this.btnEliminarTarea.Size = new System.Drawing.Size(265, 33);
+            this.btnEliminarTarea.TabIndex = 6;
+            this.btnEliminarTarea.Text = "Eliminar Tarea";
+            this.btnEliminarTarea.UseVisualStyleBackColor = true;
+            this.btnEliminarTarea.Click += new System.EventHandler(this.btnEliminarTarea_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -152,6 +164,7 @@ namespace organizador_tareas
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dgvTareas;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnEliminarTarea;
     }
 }
 

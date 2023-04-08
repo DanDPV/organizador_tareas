@@ -26,7 +26,6 @@ namespace organizador_tareas
 
             EstadoGlobal.arboles.Add(arbol);
             tareasRaiz.Add(arbol.raiz);
-
             actualizarGridView();
         }
 
@@ -82,6 +81,34 @@ namespace organizador_tareas
 
             VerSubtarea verSubtarea = new VerSubtarea();
             verSubtarea.Show();
+        }
+
+        private void btnEliminarTarea_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow selected = dgvTareas.SelectedRows[0];
+            int posicion = dgvTareas.Rows.IndexOf(selected);
+
+            NodoTarea tarea = tareasRaiz[posicion];
+            DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar la tarea " + tarea.nombre + " y todas sus subtareas?", "Confirmación", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+
+            if (result == DialogResult.OK)
+            {
+                ArbolTareas arbol = new ArbolTareas();
+                arbol.EliminarTarea(tarea, null);
+                int posicionNodo = 0;
+
+                foreach (NodoTarea nodo in tareasRaiz)
+                {
+                    if (tarea.id == nodo.id)
+                    {
+                        break;
+                    }
+                    posicionNodo++;
+                }
+
+                tareasRaiz.RemoveAt(posicionNodo);
+                actualizarGridView();
+            }
         }
     }
 }
