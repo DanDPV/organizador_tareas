@@ -68,5 +68,20 @@ namespace organizador_tareas
             }
             actualizarGridView();
         }
+
+        private void dgvTareas_DoubleClick(object sender, EventArgs e)
+        {
+            DataGridViewRow selected = dgvTareas.SelectedRows[0];
+            int posicion = dgvTareas.Rows.IndexOf(selected);
+
+            NodoTarea tarea = tareasRaiz[posicion];
+            ArbolTareas arbol = EstadoGlobal.arboles[posicion];
+            EstadoGlobal.tareas = new Stack<NodoTarea>();
+            EstadoGlobal.tareas.Push(tarea);
+            EstadoGlobal.arbolActual = arbol;
+
+            VerSubtarea verSubtarea = new VerSubtarea();
+            verSubtarea.Show();
+        }
     }
 }
