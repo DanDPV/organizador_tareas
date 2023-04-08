@@ -39,6 +39,7 @@ namespace organizador_tareas
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.btnEliminarTarea = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTareas)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -80,6 +81,7 @@ namespace organizador_tareas
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnEliminarTarea);
             this.groupBox1.Controls.Add(this.btnAddTarea);
             this.groupBox1.Controls.Add(this.dtpFechaVencimiento);
             this.groupBox1.Controls.Add(this.label2);
@@ -147,6 +149,16 @@ namespace organizador_tareas
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // btnEliminarTarea
+            // 
+            this.btnEliminarTarea.Location = new System.Drawing.Point(10, 244);
+            this.btnEliminarTarea.Name = "btnEliminarTarea";
+            this.btnEliminarTarea.Size = new System.Drawing.Size(265, 33);
+            this.btnEliminarTarea.TabIndex = 5;
+            this.btnEliminarTarea.Text = "Eliminar Tarea";
+            this.btnEliminarTarea.UseVisualStyleBackColor = true;
+            this.btnEliminarTarea.Click += new System.EventHandler(this.btnEliminarTarea_Click);
+            // 
             // VerSubtarea
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -180,5 +192,6 @@ namespace organizador_tareas
         private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnEliminarTarea;
     }
 }
