@@ -38,6 +38,7 @@ namespace organizador_tareas
             this.label2 = new System.Windows.Forms.Label();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTareas)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -46,7 +47,7 @@ namespace organizador_tareas
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(12, 21);
+            this.label3.Location = new System.Drawing.Point(67, 26);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(164, 29);
             this.label3.TabIndex = 3;
@@ -56,7 +57,7 @@ namespace organizador_tareas
             // 
             this.lblNombreTarea.AutoSize = true;
             this.lblNombreTarea.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombreTarea.Location = new System.Drawing.Point(17, 64);
+            this.lblNombreTarea.Location = new System.Drawing.Point(67, 64);
             this.lblNombreTarea.Name = "lblNombreTarea";
             this.lblNombreTarea.Size = new System.Drawing.Size(19, 29);
             this.lblNombreTarea.TabIndex = 4;
@@ -134,11 +135,24 @@ namespace organizador_tareas
             this.label1.TabIndex = 0;
             this.label1.Text = "Nombre:";
             // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(9, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(55, 108);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "⬅";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // VerSubtarea
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1269, 680);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dgvTareas);
             this.Controls.Add(this.lblNombreTarea);
@@ -165,5 +179,6 @@ namespace organizador_tareas
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button1;
     }
 }

@@ -33,8 +33,8 @@ namespace organizador_tareas
             colFecha.HeaderText = "Fecha de Vencimiento";
             dgvTareas.Columns.Add(colFecha);
 
-            tareasRaiz = EstadoGlobal.tareaActual.subTareas;
-            lblNombreTarea.Text = EstadoGlobal.tareaActual.nombre;
+            tareasRaiz = EstadoGlobal.tareas.Peek().subTareas;
+            lblNombreTarea.Text = EstadoGlobal.tareas.Peek().nombre;
             actualizarGridView();
         }
 
@@ -53,7 +53,7 @@ namespace organizador_tareas
 
         private void btnAddTarea_Click(object sender, EventArgs e)
         {
-            EstadoGlobal.arbolActual.AgregarTarea(txtNombre.Text, dtpFechaVencimiento.Value, EstadoGlobal.tareaActual);
+            EstadoGlobal.arbolActual.AgregarTarea(txtNombre.Text, dtpFechaVencimiento.Value, EstadoGlobal.tareas.Peek());
 
             actualizarGridView();
         }
@@ -64,10 +64,24 @@ namespace organizador_tareas
             int posicion = dgvTareas.Rows.IndexOf(selected);
 
             NodoTarea tarea = tareasRaiz[posicion];
-            EstadoGlobal.tareaActual = tarea;
+            EstadoGlobal.tareas.Push(tarea);
 
-            tareasRaiz = EstadoGlobal.tareaActual.subTareas;
-            lblNombreTarea.Text = EstadoGlobal.tareaActual.nombre;
+            tareasRaiz = EstadoGlobal.tareas.Peek().subTareas;
+            lblNombreTarea.Text = EstadoGlobal.tareas.Peek().nombre;
+            actualizarGridView();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (EstadoGlobal.tareas.Count == 1)
+            {
+                this.Close();
+                return;
+            }
+
+            EstadoGlobal.tareas.Pop();
+            tareasRaiz = EstadoGlobal.tareas.Peek().subTareas;
+            lblNombreTarea.Text = EstadoGlobal.tareas.Peek().nombre;
             actualizarGridView();
         }
     }
