@@ -24,13 +24,13 @@ namespace organizador_tareas
                 idTarea = Convert.ToInt32(comando.ExecuteScalar());
             }
 
-            // Insertar el registro de la relación entre las tareas en la tabla "Relacion_Tarea"
+            // Insertar el registro de la relación entre las tareas en la tabla "Relacion_Tareas"
             if (idTareaPadre != -1)
             {
                 using (SqlConnection conexion = new SqlConnection(cadenaConexion))
                 {
                     conexion.Open();
-                    SqlCommand comando = new SqlCommand("INSERT INTO Relacion_Tarea (id_tarea_padre, id_tarea_hija) VALUES (@idTareaPadre, @idTareaHija);", conexion);
+                    SqlCommand comando = new SqlCommand("INSERT INTO Relacion_Tareas (id_tarea_padre, id_tarea_hija) VALUES (@idTareaPadre, @idTareaHija);", conexion);
                     comando.Parameters.AddWithValue("@idTareaPadre", idTareaPadre);
                     comando.Parameters.AddWithValue("@idTareaHija", idTarea);
                     comando.ExecuteNonQuery();
