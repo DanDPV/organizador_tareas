@@ -31,14 +31,36 @@ namespace organizador_tareas
 
         private void actualizarGridView()
         {
-            dgvTareas.DataSource = null;
-            dgvTareas.DataSource = tareasRaiz;
-
-            foreach (DataGridViewRow row in dgvTareas.Rows)
+            if (dgvTareas.Columns.Count == 0)
             {
-                NodoTarea tarea = (NodoTarea)row.DataBoundItem;
-                row.Cells[0].Value = tarea.nombre;
-                row.Cells[1].Value = tarea.fechaVencimiento.ToShortDateString();
+                if (tareasRaiz.Count > 0)
+                {
+                    DataGridViewColumn colNombre = new DataGridViewTextBoxColumn();
+                    colNombre.DataPropertyName = "nombre";
+                    colNombre.HeaderText = "Nombre";
+                    dgvTareas.Columns.Add(colNombre);
+
+                    DataGridViewColumn colFecha = new DataGridViewTextBoxColumn();
+                    colFecha.DataPropertyName = "fechaVencimiento";
+                    colFecha.HeaderText = "Fecha de Vencimiento";
+                    dgvTareas.Columns.Add(colFecha);
+                }
+            }
+            if (tareasRaiz.Count > 0)
+            {
+                dgvTareas.DataSource = null;
+                dgvTareas.DataSource = tareasRaiz;
+
+                foreach (DataGridViewRow row in dgvTareas.Rows)
+                {
+                    NodoTarea tarea = (NodoTarea)row.DataBoundItem;
+                    row.Cells[0].Value = tarea.nombre;
+                    row.Cells[1].Value = tarea.fechaVencimiento.ToShortDateString();
+                }
+            }
+            else
+            {
+                dgvTareas.DataSource = null;
             }
         }
 
@@ -47,15 +69,6 @@ namespace organizador_tareas
             tareasRaiz = new List<NodoTarea>();
             EstadoGlobal.arboles = new List<ArbolTareas>();
             dgvTareas.AutoGenerateColumns = false;
-            DataGridViewColumn colNombre = new DataGridViewTextBoxColumn();
-            colNombre.DataPropertyName = "nombre";
-            colNombre.HeaderText = "Nombre";
-            dgvTareas.Columns.Add(colNombre);
-
-            DataGridViewColumn colFecha = new DataGridViewTextBoxColumn();
-            colFecha.DataPropertyName = "fechaVencimiento";
-            colFecha.HeaderText = "Fecha de Vencimiento";
-            dgvTareas.Columns.Add(colFecha);
 
             tareasRaiz = ArbolTareasRepository.ObtenerTareasPrincipales();
             foreach (NodoTarea tarea in tareasRaiz)
