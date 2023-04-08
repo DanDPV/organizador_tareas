@@ -21,41 +21,70 @@ namespace organizador_tareas
 
             if (nodoPadre == null)
             {
-                if (ArbolTareasRepository.AgregarTarea(nuevaTarea) == -1)
+                int idTareaRaiz = ArbolTareasRepository.AgregarTarea(nuevaTarea);
+                if (idTareaRaiz == -1)
                 {
                     throw new Exception("No se pudo agregar la tarea");
                 }
+                nuevaTarea.id = idTareaRaiz;
                 raiz = nuevaTarea;
                 return;
             }
 
-            nuevaTarea.id = nodoPadre.subTareas.Count + 1;
-
-            if (ArbolTareasRepository.AgregarTarea(nuevaTarea, nodoPadre.id) == -1)
+            int idTarea = ArbolTareasRepository.AgregarTarea(nuevaTarea, nodoPadre.id);
+            if (idTarea == -1)
             {
                 throw new Exception("No se pudo agregar la tarea");
             }
+            nuevaTarea.id = idTarea;
 
             nodoPadre.subTareas.Add(nuevaTarea);
         }
 
-        public bool EliminarTarea(NodoTarea nodoActual, int id)
+        public bool EliminarTarea(NodoTarea nodoEliminar, NodoTarea nodoPadre)
         {
-            if (nodoActual == null) return false;
-            foreach (NodoTarea subTarea in nodoActual.subTareas)
+            if (nodoEliminar == null) return false;
+            if (nodoEliminar.subTareas.Count > 0)
             {
-                if (subTarea.id == id)
+                foreach (NodoTarea subTarea in nodoEliminar.subTareas.ToList())
                 {
-                    nodoActual.subTareas.Remove(subTarea);
-                    return true;
-                }
-                else
-                {
-                    bool eliminado = EliminarTarea(subTarea, id);
-                    if (eliminado) return true;
+                    EliminarTarea(subTarea, nodoEliminar);
                 }
             }
-            return false;
+
+            if (nodoPadre == null)
+            {
+                int posicionNodo = 0;
+
+                foreach (ArbolTareas arbol in EstadoGlobal.arboles)
+                {
+                    if (arbol.raiz.id == nodoEliminar.id)
+                    {
+                        break;
+                    }
+                    posicionNodo++;
+                }
+
+                EstadoGlobal.arboles.RemoveAt(posicionNodo);
+            } else
+            {
+                int posicionNodo = 0;
+
+                foreach (NodoTarea tarea in nodoPadre.subTareas)
+                {
+                    if (tarea.id == nodoEliminar.id)
+                    {
+                        break;
+                    }
+                    posicionNodo++;
+                }
+
+                nodoPadre.subTareas.RemoveAt(posicionNodo);
+            }
+
+            ArbolTareasRepository.EliminarTarea(nodoEliminar.id);
+
+            return true;
         }
     }
 }
