@@ -10,5 +10,6 @@ namespace organizador_tareas
     {
         public static List<ArbolTareas> arboles;
         public static NodoTarea tareaActual;
+        public static ArbolTareas arbolActual;
     }
 }
