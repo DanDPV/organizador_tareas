@@ -30,11 +30,11 @@ namespace organizador_tareas
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtNombre = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.dtpFechaVencimiento = new System.Windows.Forms.DateTimePicker();
             this.btnAddTarea = new System.Windows.Forms.Button();
+            this.dtpFechaVencimiento = new System.Windows.Forms.DateTimePicker();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtNombre = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.dgvTareas = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
@@ -55,21 +55,23 @@ namespace organizador_tareas
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Agregar tarea";
             // 
-            // label1
+            // btnAddTarea
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 38);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(62, 17);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Nombre:";
+            this.btnAddTarea.Location = new System.Drawing.Point(10, 196);
+            this.btnAddTarea.Name = "btnAddTarea";
+            this.btnAddTarea.Size = new System.Drawing.Size(265, 33);
+            this.btnAddTarea.TabIndex = 4;
+            this.btnAddTarea.Text = "Agregar Tarea";
+            this.btnAddTarea.UseVisualStyleBackColor = true;
+            this.btnAddTarea.Click += new System.EventHandler(this.btnAddTarea_Click);
             // 
-            // txtNombre
+            // dtpFechaVencimiento
             // 
-            this.txtNombre.Location = new System.Drawing.Point(10, 58);
-            this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(265, 22);
-            this.txtNombre.TabIndex = 1;
+            this.dtpFechaVencimiento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpFechaVencimiento.Location = new System.Drawing.Point(10, 130);
+            this.dtpFechaVencimiento.Name = "dtpFechaVencimiento";
+            this.dtpFechaVencimiento.Size = new System.Drawing.Size(265, 22);
+            this.dtpFechaVencimiento.TabIndex = 3;
             // 
             // label2
             // 
@@ -80,23 +82,21 @@ namespace organizador_tareas
             this.label2.TabIndex = 2;
             this.label2.Text = "Fecha vencimiento:";
             // 
-            // dtpFechaVencimiento
+            // txtNombre
             // 
-            this.dtpFechaVencimiento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFechaVencimiento.Location = new System.Drawing.Point(10, 130);
-            this.dtpFechaVencimiento.Name = "dtpFechaVencimiento";
-            this.dtpFechaVencimiento.Size = new System.Drawing.Size(265, 22);
-            this.dtpFechaVencimiento.TabIndex = 3;
+            this.txtNombre.Location = new System.Drawing.Point(10, 58);
+            this.txtNombre.Name = "txtNombre";
+            this.txtNombre.Size = new System.Drawing.Size(265, 22);
+            this.txtNombre.TabIndex = 1;
             // 
-            // btnAddTarea
+            // label1
             // 
-            this.btnAddTarea.Location = new System.Drawing.Point(10, 196);
-            this.btnAddTarea.Name = "btnAddTarea";
-            this.btnAddTarea.Size = new System.Drawing.Size(265, 33);
-            this.btnAddTarea.TabIndex = 4;
-            this.btnAddTarea.Text = "Agregar Tarea";
-            this.btnAddTarea.UseVisualStyleBackColor = true;
-            this.btnAddTarea.Click += new System.EventHandler(this.btnAddTarea_Click);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(7, 38);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(62, 17);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Nombre:";
             // 
             // dgvTareas
             // 
@@ -108,8 +108,10 @@ namespace organizador_tareas
             this.dgvTareas.ReadOnly = true;
             this.dgvTareas.RowHeadersWidth = 51;
             this.dgvTareas.RowTemplate.Height = 24;
+            this.dgvTareas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvTareas.Size = new System.Drawing.Size(952, 555);
             this.dgvTareas.TabIndex = 1;
+            this.dgvTareas.DoubleClick += new System.EventHandler(this.dgvTareas_DoubleClick);
             // 
             // label3
             // 
