@@ -76,7 +76,8 @@ namespace organizador_tareas
 
             NodoTarea tarea = tareasRaiz[posicion];
             ArbolTareas arbol = EstadoGlobal.arboles[posicion];
-            EstadoGlobal.tareaActual = tarea;
+            EstadoGlobal.tareas = new Stack<NodoTarea>();
+            EstadoGlobal.tareas.Push(tarea);
             EstadoGlobal.arbolActual = arbol;
 
             VerSubtarea verSubtarea = new VerSubtarea();
