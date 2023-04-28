@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -21,12 +22,16 @@ namespace organizador_tareas
 
         private void btnAddTarea_Click(object sender, EventArgs e)
         {
-            ArbolTareas arbol = new ArbolTareas();
+            BorrarMesaje();
+            if (validarCampos())
+            {
+                ArbolTareas arbol = new ArbolTareas();
             arbol.AgregarTarea(txtNombre.Text, dtpFechaVencimiento.Value, null);
 
             EstadoGlobal.arboles.Add(arbol);
             tareasRaiz.Add(arbol.raiz);
             actualizarGridView();
+            }
         }
 
         private void actualizarGridView()
@@ -122,6 +127,33 @@ namespace organizador_tareas
                 tareasRaiz.RemoveAt(posicionNodo);
                 actualizarGridView();
             }
+        }
+
+        private bool validarCampos()
+        {
+            bool validado = true;
+
+            DateTime fecha = DateTime.Today;  //Extrae fecha actual
+            if (txtNombre.Text == "") //vefica que no quede vacío el campo
+            {
+                validado = false; //si está vacío validado es falso
+                errorProvider1.SetError(txtNombre, "Ingresar nombre"); //manda a llamar a errorprovider
+                                                                       //en los parámetros de setError se identifica a quién se esta validando y el mensaje a mostrar
+            }
+            if(dtpFechaVencimiento.Value.Date < fecha) //Compara que la fecha ingresada no sea menor a la actual
+            {
+                validado = false;
+                errorProvider1.SetError(dtpFechaVencimiento, "Ingresar una fecha valida, no menor a la actual");
+             
+            }
+
+            return validado;
+        }
+        private void BorrarMesaje()
+        {
+            //borra los mensajes para que no se muestren y pueda limpiar
+            errorProvider1.SetError(txtNombre, "");
+            errorProvider1.SetError(dtpFechaVencimiento, "");
         }
     }
 }
