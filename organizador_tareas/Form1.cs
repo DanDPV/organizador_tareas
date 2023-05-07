@@ -19,18 +19,37 @@ namespace organizador_tareas
         }
 
         List<NodoTarea> tareasRaiz;
+        bool modificarTarea = false;
+        NodoTarea modificarNodoTarea;
 
         private void btnAddTarea_Click(object sender, EventArgs e)
         {
             BorrarMesaje();
-            if (validarCampos())
-            {
-                ArbolTareas arbol = new ArbolTareas();
-            arbol.AgregarTarea(txtNombre.Text, dtpFechaVencimiento.Value, null);
+            if (validarCampos()) {
+                if (!modificarTarea)
+                {
+                    ArbolTareas arbol = new ArbolTareas();
+                    arbol.AgregarTarea(txtNombre.Text, dtpFechaVencimiento.Value, null);
 
-            EstadoGlobal.arboles.Add(arbol);
-            tareasRaiz.Add(arbol.raiz);
-            actualizarGridView();
+                    EstadoGlobal.arboles.Add(arbol);
+                    tareasRaiz.Add(arbol.raiz);
+                    actualizarGridView();
+                    txtNombre.Clear();
+                    dtpFechaVencimiento.Value = DateTime.Today;
+                } else
+                {
+                    NodoTarea nodoTarea = new NodoTarea(-1, txtNombre.Text, dtpFechaVencimiento.Value);
+                    ArbolTareas arbol = new ArbolTareas();
+                    arbol.ModificarTarea(nodoTarea, modificarNodoTarea);
+                    actualizarGridView();
+                    modificarTarea = false;
+                    modificarNodoTarea = null;
+                    txtNombre.Clear();
+                    dtpFechaVencimiento.Value = DateTime.Today;
+                    btnModificarTarea.Text = "Modificar Tarea";
+                    btnAddTarea.Text = "Agregar Tarea";
+                    groupBoxFormulario.Text = "Agregar tarea";
+                }
             }
         }
 
@@ -154,6 +173,33 @@ namespace organizador_tareas
             //borra los mensajes para que no se muestren y pueda limpiar
             errorProvider1.SetError(txtNombre, "");
             errorProvider1.SetError(dtpFechaVencimiento, "");
+        }
+
+        private void btnModificarTarea_Click(object sender, EventArgs e)
+        {
+            if (modificarTarea == false)
+            {
+                modificarTarea = true;
+                btnModificarTarea.Text = "Cancelar Modificar Tarea";
+                btnAddTarea.Text = "Modificar Tarea";
+                DataGridViewRow selected = dgvTareas.SelectedRows[0];
+                int posicion = dgvTareas.Rows.IndexOf(selected);
+
+                modificarNodoTarea = tareasRaiz[posicion];
+
+                groupBoxFormulario.Text = "Modificar tarea";
+                txtNombre.Text = modificarNodoTarea.nombre;
+                dtpFechaVencimiento.Value = modificarNodoTarea.fechaVencimiento;
+            } else
+            {
+                modificarTarea = false;
+                modificarNodoTarea = null;
+                txtNombre.Clear();
+                dtpFechaVencimiento.Value = DateTime.Today;
+                btnModificarTarea.Text = "Modificar Tarea";
+                btnAddTarea.Text = "Agregar Tarea";
+                groupBoxFormulario.Text = "Agregar tarea";
+            }
         }
     }
 }
