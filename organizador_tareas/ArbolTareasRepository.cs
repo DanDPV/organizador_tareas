@@ -9,7 +9,7 @@ namespace organizador_tareas
 {
     class ArbolTareasRepository
     {
-        private static string cadenaConexion = "Data Source=FGOMEZ;Initial Catalog=organizador_tareas;Integrated Security=True;";
+        private static string cadenaConexion = "Data Source=localhost;Initial Catalog=organizador_tareas;Integrated Security=True;";
         public static int AgregarTarea(NodoTarea nuevaTarea, int idTareaPadre = -1)
         {
             int idTarea = -1;
@@ -112,6 +112,24 @@ namespace organizador_tareas
                 comando.Parameters.AddWithValue("@idTarea", idTarea);
                 comando.ExecuteNonQuery();
             }
+        }
+
+        public static bool ModificarTarea(int idNuevaTarea, NodoTarea nodoModificar)
+        {
+
+            // Insertar el registro de la tarea en la tabla "Tarea"
+            using (SqlConnection conexion = new SqlConnection(cadenaConexion))
+            {
+                conexion.Open();
+                SqlCommand comando = new SqlCommand("UPDATE Tarea SET nombre = @nuevoNombre, fecha_vencimiento = @nuevaFechaVencimiento, completado = @completado WHERE id = @idTarea;", conexion);
+                comando.Parameters.AddWithValue("@nuevoNombre", nodoModificar.nombre);
+                comando.Parameters.AddWithValue("@nuevaFechaVencimiento", nodoModificar.fechaVencimiento);
+                comando.Parameters.AddWithValue("@completado", nodoModificar.completado);
+                comando.Parameters.AddWithValue("@idTarea", idNuevaTarea);
+                comando.ExecuteNonQuery();
+            }
+
+            return true;
         }
     }
 }

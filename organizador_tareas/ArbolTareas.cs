@@ -86,5 +86,18 @@ namespace organizador_tareas
 
             return true;
         }
+
+        public bool ModificarTarea(NodoTarea nodoModificar, NodoTarea referenciaNodo)
+        {
+            if (nodoModificar == null || referenciaNodo == null) return false;
+
+            ArbolTareasRepository.ModificarTarea(referenciaNodo.id, nodoModificar);
+
+            referenciaNodo.nombre = nodoModificar.nombre;
+            referenciaNodo.fechaVencimiento = nodoModificar.fechaVencimiento;
+            referenciaNodo.completado = nodoModificar.completado;
+
+            return true;
+        }
     }
 }
