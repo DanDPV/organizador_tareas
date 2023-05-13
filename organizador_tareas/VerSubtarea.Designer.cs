@@ -34,6 +34,7 @@ namespace organizador_tareas
             this.lblNombreTarea = new System.Windows.Forms.Label();
             this.dgvTareas = new System.Windows.Forms.DataGridView();
             this.groupBoxFormulario = new System.Windows.Forms.GroupBox();
+            this.btnModificarTarea = new System.Windows.Forms.Button();
             this.btnEliminarTarea = new System.Windows.Forms.Button();
             this.btnAddTarea = new System.Windows.Forms.Button();
             this.dtpFechaVencimiento = new System.Windows.Forms.DateTimePicker();
@@ -43,7 +44,7 @@ namespace organizador_tareas
             this.button1 = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.btnModificarTarea = new System.Windows.Forms.Button();
+            this.btnCompletarTarea = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTareas)).BeginInit();
             this.groupBoxFormulario.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
@@ -88,6 +89,7 @@ namespace organizador_tareas
             // 
             // groupBoxFormulario
             // 
+            this.groupBoxFormulario.Controls.Add(this.btnCompletarTarea);
             this.groupBoxFormulario.Controls.Add(this.btnModificarTarea);
             this.groupBoxFormulario.Controls.Add(this.btnEliminarTarea);
             this.groupBoxFormulario.Controls.Add(this.btnAddTarea);
@@ -103,6 +105,17 @@ namespace organizador_tareas
             this.groupBoxFormulario.TabIndex = 6;
             this.groupBoxFormulario.TabStop = false;
             this.groupBoxFormulario.Text = "Agregar tarea";
+            // 
+            // btnModificarTarea
+            // 
+            this.btnModificarTarea.Location = new System.Drawing.Point(10, 300);
+            this.btnModificarTarea.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnModificarTarea.Name = "btnModificarTarea";
+            this.btnModificarTarea.Size = new System.Drawing.Size(265, 33);
+            this.btnModificarTarea.TabIndex = 8;
+            this.btnModificarTarea.Text = "Modificar Tarea";
+            this.btnModificarTarea.UseVisualStyleBackColor = true;
+            this.btnModificarTarea.Click += new System.EventHandler(this.btnModificarTarea_Click);
             // 
             // btnEliminarTarea
             // 
@@ -181,16 +194,16 @@ namespace organizador_tareas
             // 
             this.errorProvider2.ContainerControl = this;
             // 
-            // btnModificarTarea
+            // btnCompletarTarea
             // 
-            this.btnModificarTarea.Location = new System.Drawing.Point(10, 300);
-            this.btnModificarTarea.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnModificarTarea.Name = "btnModificarTarea";
-            this.btnModificarTarea.Size = new System.Drawing.Size(265, 33);
-            this.btnModificarTarea.TabIndex = 8;
-            this.btnModificarTarea.Text = "Modificar Tarea";
-            this.btnModificarTarea.UseVisualStyleBackColor = true;
-            this.btnModificarTarea.Click += new System.EventHandler(this.btnModificarTarea_Click);
+            this.btnCompletarTarea.Location = new System.Drawing.Point(11, 354);
+            this.btnCompletarTarea.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCompletarTarea.Name = "btnCompletarTarea";
+            this.btnCompletarTarea.Size = new System.Drawing.Size(265, 33);
+            this.btnCompletarTarea.TabIndex = 9;
+            this.btnCompletarTarea.Text = "Completar Tarea";
+            this.btnCompletarTarea.UseVisualStyleBackColor = true;
+            this.btnCompletarTarea.Click += new System.EventHandler(this.btnCompletarTarea_Click);
             // 
             // VerSubtarea
             // 
@@ -205,6 +218,7 @@ namespace organizador_tareas
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "VerSubtarea";
             this.Text = "VerSubtarea";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.VerSubtarea_FormClosing);
             this.Load += new System.EventHandler(this.VerSubtarea_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTareas)).EndInit();
             this.groupBoxFormulario.ResumeLayout(false);
@@ -232,5 +246,6 @@ namespace organizador_tareas
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.ErrorProvider errorProvider2;
         private System.Windows.Forms.Button btnModificarTarea;
+        private System.Windows.Forms.Button btnCompletarTarea;
     }
 }

@@ -31,6 +31,7 @@ namespace organizador_tareas
         {
             this.components = new System.ComponentModel.Container();
             this.groupBoxFormulario = new System.Windows.Forms.GroupBox();
+            this.btnModificarTarea = new System.Windows.Forms.Button();
             this.btnEliminarTarea = new System.Windows.Forms.Button();
             this.btnAddTarea = new System.Windows.Forms.Button();
             this.dtpFechaVencimiento = new System.Windows.Forms.DateTimePicker();
@@ -40,7 +41,7 @@ namespace organizador_tareas
             this.dgvTareas = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.btnModificarTarea = new System.Windows.Forms.Button();
+            this.btnCompletarTarea = new System.Windows.Forms.Button();
             this.groupBoxFormulario.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTareas)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
@@ -48,6 +49,7 @@ namespace organizador_tareas
             // 
             // groupBoxFormulario
             // 
+            this.groupBoxFormulario.Controls.Add(this.btnCompletarTarea);
             this.groupBoxFormulario.Controls.Add(this.btnModificarTarea);
             this.groupBoxFormulario.Controls.Add(this.btnEliminarTarea);
             this.groupBoxFormulario.Controls.Add(this.btnAddTarea);
@@ -63,6 +65,17 @@ namespace organizador_tareas
             this.groupBoxFormulario.TabIndex = 0;
             this.groupBoxFormulario.TabStop = false;
             this.groupBoxFormulario.Text = "Agregar tarea";
+            // 
+            // btnModificarTarea
+            // 
+            this.btnModificarTarea.Location = new System.Drawing.Point(11, 293);
+            this.btnModificarTarea.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnModificarTarea.Name = "btnModificarTarea";
+            this.btnModificarTarea.Size = new System.Drawing.Size(265, 33);
+            this.btnModificarTarea.TabIndex = 7;
+            this.btnModificarTarea.Text = "Modificar Tarea";
+            this.btnModificarTarea.UseVisualStyleBackColor = true;
+            this.btnModificarTarea.Click += new System.EventHandler(this.btnModificarTarea_Click);
             // 
             // btnEliminarTarea
             // 
@@ -151,16 +164,16 @@ namespace organizador_tareas
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // btnModificarTarea
+            // btnCompletarTarea
             // 
-            this.btnModificarTarea.Location = new System.Drawing.Point(11, 293);
-            this.btnModificarTarea.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnModificarTarea.Name = "btnModificarTarea";
-            this.btnModificarTarea.Size = new System.Drawing.Size(265, 33);
-            this.btnModificarTarea.TabIndex = 7;
-            this.btnModificarTarea.Text = "Modificar Tarea";
-            this.btnModificarTarea.UseVisualStyleBackColor = true;
-            this.btnModificarTarea.Click += new System.EventHandler(this.btnModificarTarea_Click);
+            this.btnCompletarTarea.Location = new System.Drawing.Point(11, 344);
+            this.btnCompletarTarea.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCompletarTarea.Name = "btnCompletarTarea";
+            this.btnCompletarTarea.Size = new System.Drawing.Size(265, 33);
+            this.btnCompletarTarea.TabIndex = 8;
+            this.btnCompletarTarea.Text = "Completar Tarea";
+            this.btnCompletarTarea.UseVisualStyleBackColor = true;
+            this.btnCompletarTarea.Click += new System.EventHandler(this.btnCompletarTarea_Click);
             // 
             // Form1
             // 
@@ -196,6 +209,7 @@ namespace organizador_tareas
         private System.Windows.Forms.Button btnEliminarTarea;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.Button btnModificarTarea;
+        private System.Windows.Forms.Button btnCompletarTarea;
     }
 }
 

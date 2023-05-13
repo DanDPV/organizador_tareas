@@ -21,6 +21,7 @@ namespace organizador_tareas
         List<NodoTarea> tareasRaiz;
         bool modificarTarea = false;
         NodoTarea modificarNodoTarea;
+        public delegate void ActualizarTareasPrincipales();
 
         private void btnAddTarea_Click(object sender, EventArgs e)
         {
@@ -68,6 +69,16 @@ namespace organizador_tareas
                     colFecha.DataPropertyName = "fechaVencimiento";
                     colFecha.HeaderText = "Fecha de Vencimiento";
                     dgvTareas.Columns.Add(colFecha);
+
+                    DataGridViewColumn colCompletado = new DataGridViewTextBoxColumn();
+                    colCompletado.DataPropertyName = "completado";
+                    colCompletado.HeaderText = "Completado";
+                    dgvTareas.Columns.Add(colCompletado);
+
+                    DataGridViewColumn colPorcentaje = new DataGridViewTextBoxColumn();
+                    colPorcentaje.DataPropertyName = "porcentajeProgresoFormateado";
+                    colPorcentaje.HeaderText = "Porcentaje Progreso";
+                    dgvTareas.Columns.Add(colPorcentaje);
                 }
             }
             if (tareasRaiz.Count > 0)
@@ -80,6 +91,14 @@ namespace organizador_tareas
                     NodoTarea tarea = (NodoTarea)row.DataBoundItem;
                     row.Cells[0].Value = tarea.nombre;
                     row.Cells[1].Value = tarea.fechaVencimiento.ToShortDateString();
+                    if (tarea.completado == 1)
+                    {
+                        row.Cells[2].Value = "Sí";
+                    } else
+                    {
+                        row.Cells[2].Value = "No";
+                    }
+                    row.Cells[3].Value = tarea.porcentajeProgresoFormateado;
                 }
             }
             else
@@ -116,7 +135,7 @@ namespace organizador_tareas
             EstadoGlobal.tareas.Push(tarea);
             EstadoGlobal.arbolActual = arbol;
 
-            VerSubtarea verSubtarea = new VerSubtarea();
+            VerSubtarea verSubtarea = new VerSubtarea(actualizarGridView);
             verSubtarea.Show();
         }
 
@@ -200,6 +219,25 @@ namespace organizador_tareas
                 btnAddTarea.Text = "Agregar Tarea";
                 groupBoxFormulario.Text = "Agregar tarea";
             }
+        }
+
+        private void btnCompletarTarea_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow selected = dgvTareas.SelectedRows[0];
+            int posicion = dgvTareas.Rows.IndexOf(selected);
+
+            NodoTarea tarea = tareasRaiz[posicion];
+            if (tarea.completado == 0)
+            {
+                tarea.completado = 1;
+            } else
+            {
+                tarea.completado = 0;
+            }
+
+            ArbolTareas arbol = new ArbolTareas();
+            arbol.ModificarTarea(tarea, tarea);
+            actualizarGridView();
         }
     }
 }
