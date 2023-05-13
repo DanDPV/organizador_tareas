@@ -18,9 +18,10 @@ namespace organizador_tareas
             using (SqlConnection conexion = new SqlConnection(cadenaConexion))
             {
                 conexion.Open();
-                SqlCommand comando = new SqlCommand("INSERT INTO Tarea (nombre, fecha_vencimiento) VALUES (@nombre, @fechaVencimiento); SELECT SCOPE_IDENTITY();", conexion);
+                SqlCommand comando = new SqlCommand("INSERT INTO Tarea (nombre, fecha_vencimiento, completado) VALUES (@nombre, @fechaVencimiento, @completado); SELECT SCOPE_IDENTITY();", conexion);
                 comando.Parameters.AddWithValue("@nombre", nuevaTarea.nombre);
                 comando.Parameters.AddWithValue("@fechaVencimiento", nuevaTarea.fechaVencimiento);
+                comando.Parameters.AddWithValue("@completado", nuevaTarea.completado);
                 idTarea = Convert.ToInt32(comando.ExecuteScalar());
             }
 
@@ -53,6 +54,7 @@ namespace organizador_tareas
                 while (lector.Read())
                 {
                     NodoTarea subTarea = new NodoTarea(Convert.ToInt32(lector["id"]), Convert.ToString(lector["nombre"]), Convert.ToDateTime(lector["fecha_vencimiento"]));
+                    subTarea.completado = Convert.ToInt32(lector["completado"]);
                     subTareas.Add(subTarea);
                 }
                 lector.Close();
@@ -74,11 +76,12 @@ namespace organizador_tareas
             using (SqlConnection conexion = new SqlConnection(cadenaConexion))
             {
                 conexion.Open();
-                SqlCommand comando = new SqlCommand("SELECT id, nombre, fecha_vencimiento, completado FROM Tarea A LEFT JOIN Relacion_Tareas B ON B.id_tarea_hija = A.id WHERE B.id_tarea_padre is null;", conexion);
+                SqlCommand comando = new SqlCommand("SELECT id, nombre, fecha_vencimiento, ISNULL ( completado , 0 ) as completado FROM Tarea A LEFT JOIN Relacion_Tareas B ON B.id_tarea_hija = A.id WHERE B.id_tarea_padre is null;", conexion);
                 SqlDataReader lector = comando.ExecuteReader();
                 while (lector.Read())
                 {
                     NodoTarea subTarea = new NodoTarea(Convert.ToInt32(lector["id"]), Convert.ToString(lector["nombre"]), Convert.ToDateTime(lector["fecha_vencimiento"]));
+                    subTarea.completado = Convert.ToInt32(lector["completado"]);
                     tareas.Add(subTarea);
                 }
                 lector.Close();
