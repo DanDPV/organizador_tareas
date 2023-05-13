@@ -18,6 +18,7 @@ namespace organizador_tareas
         public void AgregarTarea(string nombre, DateTime fechaVencimiento, NodoTarea nodoPadre)
         {
             NodoTarea nuevaTarea = new NodoTarea(1, nombre, fechaVencimiento);
+            nuevaTarea.completado = 0;
 
             if (nodoPadre == null)
             {
