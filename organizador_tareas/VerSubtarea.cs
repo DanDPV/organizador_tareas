@@ -235,5 +235,10 @@ namespace organizador_tareas
             arbol.ModificarTarea(tarea, tarea);
             actualizarGridView();
         }
+
+        private void lblNombreTarea_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace organizador_tareas
 {
     class ArbolTareasRepository
     {
-        private static string cadenaConexion = "Data Source=localhost;Initial Catalog=organizador_tareas;Integrated Security=True;";
+        private static string cadenaConexion = "Data Source=FGOMEZ;Initial Catalog=organizador_tareas;Integrated Security=True;";
         public static int AgregarTarea(NodoTarea nuevaTarea, int idTareaPadre = -1)
         {
             int idTarea = -1;
